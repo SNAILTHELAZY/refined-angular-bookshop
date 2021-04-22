@@ -31,7 +31,7 @@ connection.once('open',()=>console.log('Connection established successfully'));
 const userRouter=require('./routes/user');
 
 //app.use('/books',bookRouter);
-app.use('/user',userRouter);
+app.use('/users',userRouter);
 
 const port=process.env.PORT || 3000;
 app.listen(port,()=>console.log(`listening on port ${port}`));
