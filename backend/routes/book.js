@@ -30,7 +30,7 @@ router.post('/new',(req,res)=>{
         //console.log(book);
         try{
 
-            if(files){
+            if(Object.keys(files).length!=0){
                 //console.log(files);
                 var oldPath=files.cover.path;
                 var filename=files.cover.name;
@@ -48,7 +48,8 @@ router.post('/new',(req,res)=>{
             }
 
             const newBook=await book.save();
-            res.status(201).send({message:'book created'});
+            const books=await Book.find();
+            res.status(201).send({books:books,message:'book created'});
         }catch(err){
             console.log(err)
             res.status(500).send(err);
@@ -57,11 +58,53 @@ router.post('/new',(req,res)=>{
 });
 
 router.put('/:id',(req,res)=>{
+    const form=new formidable.IncomingForm();
+    form.parse(req,async(err,fields,files)=>{
+        if(err){
+            res.status(500).send({message:'unknwon error'});
+        }
 
+        const book=JSON.parse(fields.book);
+
+        //console.log(book);
+        try{
+
+            if(Object.keys(files).length!=0){
+                //console.log(files);
+                var oldPath=files.cover.path;
+                var filename=files.cover.name;
+                filename=filename.split('.');
+                filename[0]=book.title;
+    
+                var rename=filename[0].concat('.',filename[1]);
+                var newPath=path.join(bookCoverPath,rename);
+    
+                var raw=fs.readFileSync(oldPath);
+                fs.writeFileSync(newPath,raw);
+                //console.log(finished);
+                //res.status(500).send({message:'cannot save image'});
+                
+            }
+            
+            await Book.findByIdAndUpdate(req.params.id,book);
+            const books=await Book.find();
+            res.status(200).send({books:books,message:'book updated'});
+        }catch(err){
+            console.log(err)
+            res.status(500).send(err);
+        }
+    })
 });
 
-router.delete('/:id',(req,res)=>{
-
+router.delete('/:id',async(req,res)=>{
+    try{
+        await Book.findByIdAndDelete(req.params.id);
+        const books=await Book.find();
+        res.status(200).send({books:books,message:'book delete successful'});
+    }catch(err){
+        //console.log(err)
+        res.status(500).send({message:'unknown error'});
+    }
 });
 
 module.exports=router;

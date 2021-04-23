@@ -20,8 +20,8 @@
         </form>
     </div>
 </nav>
-
+<ngb-alert *ngIf="message!=null" [type]="'success'">{{message}}</ngb-alert>
 <!--This will show the books-->
-<app-books *ngFor="let book of books" [book]="book"></app-books>
+<app-books *ngFor="let book of books" [book]="book" [isAuth]="isAuth" (deleteOpen)="openDelForm($event)" (updateOpen)="openUpdateForm($event)"></app-books>
 
 <button class="btn btn-primary fab" (click)="openBookRegForm()" *ngIf="isAuth">&#43;</button>

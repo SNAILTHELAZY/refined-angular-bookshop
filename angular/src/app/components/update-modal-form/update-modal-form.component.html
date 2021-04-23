@@ -1,1 +1,33 @@
-<p>update-modal-form works!</p>
+<div class="modal-header">
+    <h4 class="modal-title">Update</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('close click')">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="container-fluid" [formGroup]="form">
+        <div class="row">
+            <input formControlName="title" class="form-control col" type="text" placeholder="title" />
+            <input formControlName="author" class="form-control col" type="text" placeholder="author" />
+        </div>
+        <div class="row">
+            <select formControlName="genre" class="form-control col" aria-placeholder="genre">
+                <option>genre</option>
+                <option *ngFor="let g of genres">{{g}}</option>
+            </select>
+            <input formControlName="pages" class="form-control col" type="number" placeholder="pages" />
+        </div>
+        <div class="row">
+            <input formControlName="publishDate" class="form-control col" type="date" placeholder="publish date" />
+        </div>
+        <div class="row">
+            <textarea formControlName="description" class="form-control col" placeholder="description"></textarea>
+            <input formControlName="cover" (change)="onFileSelect($event)" id="file" class="form-control col" placeholder="cover" type="file" accept="image" />
+            <label for="file" class="image">Choose an Image</label>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-secondary float-right" (click)="activeModal.dismiss()">Cancel</button>
+    <button class="btn btn-success float-right" (click)="onSubmit()">Update</button>
+</div>

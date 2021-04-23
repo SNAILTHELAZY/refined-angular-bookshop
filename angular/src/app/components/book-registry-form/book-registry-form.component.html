@@ -13,6 +13,7 @@
         <div class="row">
             <select formControlName="genre" class="form-control col" aria-placeholder="genre">
                 <option>genre</option>
+                <option *ngFor="let g of genres">{{g}}</option>
             </select>
             <input formControlName="pages" class="form-control col" type="number" placeholder="pages" />
         </div>
@@ -32,6 +33,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-secondary" (click)="activeModal.dismiss()">Close</button>
-    <button [disabled]="!valid" class="btn btn-success" (click)="onSubmit()">Create</button>
+    <button class="btn btn-secondary float-right" (click)="activeModal.dismiss()">Close</button>
+    <button [disabled]="!valid" class="btn btn-success float-right" (click)="onSubmit()">Create</button>
 </div>

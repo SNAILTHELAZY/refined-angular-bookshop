@@ -13,6 +13,7 @@ export class BookRegistryFormComponent implements OnInit {
   valid_extensions=['png','jpg','jpeg'];
   isExtValid:boolean;
   file;
+  genres=['fable','sci-fi','technical','fiction'];
 
   constructor(public activeModal:NgbActiveModal,private fb:FormBuilder) {
     this.form=this.fb.group({

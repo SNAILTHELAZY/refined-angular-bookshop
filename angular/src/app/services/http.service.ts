@@ -41,7 +41,11 @@ export class HttpService {
     return this.http.get('/books',{responseType:'json'});
   }
 
-  public updateBooks(){}
+  public updateBooks(id:string,formData){
+    return this.http.put('/books/'+id,formData,{responseType:'json'});
+  }
 
-  public deleteBooks(){}
+  public deleteBooks(id:string){
+    return this.http.delete('/books/'+id,{responseType:'json'});
+  }
 }
