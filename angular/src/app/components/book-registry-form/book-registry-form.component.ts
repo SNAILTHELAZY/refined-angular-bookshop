@@ -10,6 +10,9 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class BookRegistryFormComponent implements OnInit {
   form:FormGroup
   valid:boolean;
+  valid_extensions=['png','jpg','jpeg'];
+  isExtValid:boolean;
+  file;
 
   constructor(public activeModal:NgbActiveModal,private fb:FormBuilder) {
     this.form=this.fb.group({
@@ -29,19 +32,37 @@ export class BookRegistryFormComponent implements OnInit {
 
   checkValid(){
     this.valid=this.form.valid;
+    if(this.form.valid && (this.form.value.cover==='' || this.isExtValid)){
+      this.valid=true;
+    }
+  }
+
+  onFileSelect(event){
+    var file=event.target.files[0];
+    var ext=file.name.substring(file.name.lastIndexOf('.')+1);
+    if(this.valid_extensions.includes(ext)){
+      this.file=file;
+      this.isExtValid=true;
+    }else{
+      this.isExtValid=false;
+    }
   }
 
   onSubmit(){
     //console.log(this.form.value);
-    this.activeModal.close({
+    const formData=new FormData();
+    formData.append('book',JSON.stringify({
       title:this.form.value.title,
       author:this.form.value.author,
       genre:this.form.value.genre,
       description:this.form.value.description,
       pages:this.form.value.pages,
-      cover:this.form.value.cover,
       publishDate:this.form.value.publishDate
-    })
+    }));
+    if(this.file!=null){
+      formData.append('cover',this.file,this.file.name);
+    }
+    this.activeModal.close(formData);
   }
 
 }

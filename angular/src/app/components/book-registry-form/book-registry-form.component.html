@@ -21,7 +21,8 @@
         </div>
         <div class="row">
             <textarea formControlName="description" class="form-control col" placeholder="description"></textarea>
-            <input formControlName="cover" class="form-control col" placeholder="cover" type="file" />
+            <input formControlName="cover" (change)="onFileSelect($event)" id="file" class="form-control col" placeholder="cover" type="file" accept="image" />
+            <label for="file" class="image">Choose an Image</label>
         </div>
         <ngb-alert [type]="'danger'" *ngIf="!form.valid">
             <p *ngIf="form.controls['title'].hasError('required')">title is required</p>

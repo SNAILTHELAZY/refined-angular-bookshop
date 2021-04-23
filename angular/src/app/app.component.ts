@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'angular';
   public isCollapsed=true;
   public isAuth:boolean;
+  books=[];
 
   constructor(private modalService:NgbModal,private http:HttpService){
     
@@ -22,6 +23,15 @@ export class AppComponent implements OnInit {
     this.http.checkLogin().toPromise()
     .then((res:any)=>{
       this.isAuth=res.isAuth;
+    }).catch(err=>console.error(err));
+
+    this.http.getBooks().toPromise()
+    .then((res:any)=>{
+      res.forEach((element)=>{
+        this.books.push(element)
+      })
+      //console.log(this.books);
+      //console.log(res)
     }).catch(err=>console.error(err));
   }
 
@@ -55,17 +65,14 @@ export class AppComponent implements OnInit {
   openBookRegForm(){
     const bookRegModal=this.modalService.open(BookRegistryFormComponent,{size:'lg'});
     bookRegModal.result.then(res=>{
-      //console.log(res);
-      const newBook={
-        title:res.title,
-        author:res.author,
-        genre:res.genre,
-        description:res.description,
-        pages:res.pages,
-        publishDate:res.publishDate,
-        cover:res.cover
-      }
-      this.http.createBook(newBook);
+      console.log(res);
+      console.log(res.get('cover'));
+      console.log(res.get('book'));
+      
+      this.http.createBook(res).toPromise()
+      .then(res=>console.log(res))
+      .catch(err=>console.error(err));
+      
     }).catch(err=>console.error(err));
   }
 

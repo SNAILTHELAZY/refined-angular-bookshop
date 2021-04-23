@@ -1,5 +1,4 @@
 const mongoose=require('mongoose');
-const coverImageBasePath='uploads/bookCovers';
 
 const bookSchema=mongoose.Schema({
     title:{
@@ -30,5 +29,4 @@ const bookSchema=mongoose.Schema({
     }
 })
 
-module.exports.coverImageBasePath=coverImageBasePath;
 module.exports=mongoose.model('Book',bookSchema);

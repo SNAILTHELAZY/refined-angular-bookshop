@@ -1,3 +1,18 @@
 input{
     margin:0 2px;
 }
+
+input[type="file"]{
+    display:none;
+}
+
+.image{
+    color:white;
+    height:auto;
+    width:auto;
+    background-color:teal;
+    padding:5px;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}

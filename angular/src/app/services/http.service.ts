@@ -33,11 +33,13 @@ export class HttpService {
   }
 
   //book related
-  public createBook(book:Book){
-    return this.http.post('/books/new',book,{responseType:'json'});
+  public createBook(formData:FormData){
+    return this.http.post('/books/new',formData,{responseType:'json'});
   }
 
-  public getBooks(){}
+  public getBooks(){
+    return this.http.get('/books',{responseType:'json'});
+  }
 
   public updateBooks(){}
 

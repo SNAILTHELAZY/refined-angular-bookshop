@@ -22,5 +22,6 @@
 </nav>
 
 <!--This will show the books-->
+<app-books *ngFor="let book of books" [book]="book"></app-books>
 
 <button class="btn btn-primary fab" (click)="openBookRegForm()" *ngIf="isAuth">&#43;</button>

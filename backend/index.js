@@ -27,10 +27,10 @@ const connection=mongoose.connection;
 connection.on('error',error=>console.log(error));
 connection.once('open',()=>console.log('Connection established successfully'));
 
-//const bookRouter=require('./routes/book');
+const bookRouter=require('./routes/book');
 const userRouter=require('./routes/user');
 
-//app.use('/books',bookRouter);
+app.use('/books',bookRouter);
 app.use('/users',userRouter);
 
 const port=process.env.PORT || 3000;

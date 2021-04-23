@@ -5,5 +5,5 @@ export interface Book {
     description:string;
     pages:number;
     publishDate:Date;
-    cover:File;
+    cover:any;
 }
