@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Username</label>
+        <input formControlName="username" class="form-control" type="text" />
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input formControlName="password" class="form-control" type="password" />
+    </div>
+    <ngb-alert *ngIf="!form.valid" [type]="'danger'">
+        <p *ngIf="form.controls['username'].hasError('required')">
+            username required
+        </p>
+        <p *ngIf="form.controls['password'].hasError('required')">
+            password required
+        </p>
+    </ngb-alert>
+    <button type="submit" class="btn btn-success">Login</button>
+</form>
