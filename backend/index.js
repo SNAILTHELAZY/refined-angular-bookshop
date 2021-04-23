@@ -13,7 +13,7 @@ const passport=require('./config/passport');
 app.use(bodyParser.urlencoded({limit:'10mb',extended:false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use(cors());
+app.use(cors({credentials:true}));
 app.use(session({
     secret:process.env.SECRET,
     resave:false,

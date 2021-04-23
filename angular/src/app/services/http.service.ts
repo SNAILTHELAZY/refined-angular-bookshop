@@ -1,22 +1,41 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { User } from '../interfaces/user';
+import { Book } from '../interfaces/book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http) { }
+  constructor(private http:HttpClient) { }
 
   //user authentication requests
-  public login(){}
+  public login(user:User){
+    return this.http.post('/users/login',user,{
+      withCredentials:true
+    });
+  }
 
-  public register(){}
+  public register(user:User){
+    return this.http.post('/users/register',user,{
+      responseType:'json',
+      withCredentials:true
+    });
+  }
 
-  public logout(){}
+  public logout(){
+    return this.http.post('/users/logout',{},{withCredentials:true});
+  }
+
+  public checkLogin(){
+    return this.http.get('/users',{withCredentials:true});
+  }
 
   //book related
-  public createBook(){}
+  public createBook(book:Book){
+    return this.http.post('/books/new',book,{responseType:'json'});
+  }
 
   public getBooks(){}
 

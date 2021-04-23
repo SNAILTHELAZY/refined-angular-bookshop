@@ -23,8 +23,21 @@ router.post('/login',passport.authenticate('local'),(req,res)=>{
         res.status(200).send(req.user);
 });
 
-router.get('/logout',(req,res)=>{
+router.post('/logout',(req,res)=>{
     req.logout();
+    res.status(200).json({user:req.user});
+})
+
+router.get('/',async(req,res)=>{
+    req.user ? res.status(200).json({isAuth:true}) : res.status(200).json({isAuth:false});
+    /*
+    try{
+        const users=await User.find();
+        res.status(200).send(users);
+    }catch{
+        res.status(500).send({message:'unknown server error'});
+    }
+    */
 })
 
 module.exports=router;

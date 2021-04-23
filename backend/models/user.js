@@ -22,7 +22,7 @@ userSchema.methods.validatePassword=async(password)=>{
     }
 };
 
-userSchema.post('save',async function(next){
+userSchema.pre('save',async function(next){
     try{
         const salt=await bcrypt.genSalt(saltRounds);
         //console.log(this.password);

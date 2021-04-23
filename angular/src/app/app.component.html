@@ -7,14 +7,11 @@
     </div>
     <div class="collapse navbar-collapse" [(ngbCollapse)]="isCollapsed">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link">Login</a>
+            <li *ngIf="!isAuth" class="nav-item">
+                <a class="nav-link" (click)="openAuthForm()">Signin</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Logout</a>
+            <li *ngIf="isAuth" class="nav-item">
+                <a class="nav-link" (click)="logout()">Logout</a>
             </li>
         </ul>
         <form class="d-flex">
@@ -26,4 +23,4 @@
 
 <!--This will show the books-->
 
-<button class="btn btn-primary fab">&#43;</button>
+<button class="btn btn-primary fab" (click)="openBookRegForm()" *ngIf="isAuth">&#43;</button>
