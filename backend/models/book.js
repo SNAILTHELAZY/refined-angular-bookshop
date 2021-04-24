@@ -27,6 +27,6 @@ const bookSchema=mongoose.Schema({
     cover:{
         type:String,
     }
-})
+});
 
 module.exports=mongoose.model('Book',bookSchema);

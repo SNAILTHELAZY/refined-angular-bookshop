@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationFormComponent } from './components/authentication-form/authentication-form.component';
 import { BookRegistryFormComponent } from './components/book-registry-form/book-registry-form.component';
@@ -18,9 +19,12 @@ export class AppComponent implements OnInit {
   books=[];
   ids=[];
   message:string;
+  form:FormGroup
 
-  constructor(private modalService:NgbModal,private http:HttpService){
-    
+  constructor(private modalService:NgbModal,private http:HttpService,private fb:FormBuilder){
+    this.form=this.fb.group({
+      search:['']
+    });
   }
 
   ngOnInit(){
@@ -31,9 +35,7 @@ export class AppComponent implements OnInit {
 
     this.http.getBooks().toPromise()
     .then((res:any)=>{
-      res.forEach((element)=>{
-        this.books.push(element);
-      })
+      this.books=res
       //console.log(this.books);
       //console.log(res)
     }).catch(err=>console.error(err));
@@ -77,6 +79,7 @@ export class AppComponent implements OnInit {
       this.http.createBook(res).toPromise()
       .then((res:any)=>{
         this.message=res.message;
+        //console.log(res.books);
         this.books=res.books;
       })
       .catch(err=>console.error(err));
@@ -126,6 +129,15 @@ export class AppComponent implements OnInit {
         this.books=res.books;
       })
       .catch(err=>console.error(err));
+    }).catch(err=>console.error(err));
+  }
+
+  searchWithKey(){
+    const keyword=this.form.value.search;
+    this.http.getBooks(keyword).toPromise()
+    .then((res:any)=>{
+      //console.log(res);
+      this.books=res;
     }).catch(err=>console.error(err));
   }
 }

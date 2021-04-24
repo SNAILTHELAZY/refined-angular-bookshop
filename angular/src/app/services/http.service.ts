@@ -37,8 +37,13 @@ export class HttpService {
     return this.http.post('/books/new',formData,{responseType:'json'});
   }
 
-  public getBooks(){
-    return this.http.get('/books',{responseType:'json'});
+  public getBooks(keyword?:string){
+    if(keyword){
+      return this.http.get('/books?keyword='+keyword,{responseType:'json'});
+    }else{
+      return this.http.get('/books',{responseType:'json'});
+    }
+    
   }
 
   public updateBooks(id:string,formData){
@@ -47,5 +52,9 @@ export class HttpService {
 
   public deleteBooks(id:string){
     return this.http.delete('/books/'+id,{responseType:'json'});
+  }
+
+  public getBookCover(cover:string){
+    return this.http.get('/books/image/'+cover,{responseType:'blob'});
   }
 }
